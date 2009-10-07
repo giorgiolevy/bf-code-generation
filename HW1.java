@@ -11,19 +11,15 @@ public class HW1 {
      *
      * @param args
      */
-    private static final int populationSize = 50;
+    private static final int populationSize = 100;
     private static final int numGenerations = 10000;
 
-    public static void main2(String args[]) {
-        System.out.println(BFPhenotype.distance("eijiij"));
-    }
-
     public static void main(String args[]) {
-        List<Genotype> population = new LinkedList<Genotype>();//Note: do not use arraylist here, it is painfully slow
+        List<Genotype> population = new LinkedList<Genotype>();
 
         //generate the random first generation
         for (int i = 0; i < populationSize; i++) {
-            population.add(new BFGenotype("++++++++++++++++++++++++++++++++++++++...."));
+            population.add(new BFGenotype("++++++++++++++++++++++++++++.++."));
         }
 
         Comparator<Genotype> geneComparor = new Comparator<Genotype>() {
@@ -32,53 +28,44 @@ public class HW1 {
                 return g2.getPhenotype().getFitness().compareTo(g1.getPhenotype().getFitness());
             }
         };
-long addtime=0;
-long sorttime=0;
-long subtime=0;
-long gctime=0;
-long addstart;
-long sortstart;
-long substart;
-long gcstart;
 
         for (int generation = 1; generation <= numGenerations; generation++) {
-System.out.println(addtime);
-System.out.println(sorttime);
-System.out.println(gctime);
-addstart=System.currentTimeMillis();
             //printouts
-            System.out.println("generation:" + generation);
-            System.out.println("\tmin:" + population.get(9).getPhenotype().getFitness() + ", max:" + population.get(0).getPhenotype().getFitness());
-            /* for (int i = 0; i < populationSize / 10; i++) {
-            System.out.println("\t\t" + population.get(i).getPhenotype());
-            }*/
-            System.out.println("\t\t" + population.get(0).getPhenotype());
-            System.out.println("\t\t" + population.get(1).getPhenotype());
+            if (generation % 20 == 0) {
+                System.out.println("generation:" + generation);
+                System.out.println("\t\t" +
+                        population.get(0).getPhenotype() + " : " + ((BFGenotype) population.get(0)).getChangeType());
+            //	    System.out.println("\t\t" + population.get(1).getPhenotype());
+            }
 
             //do the crossover children
-            for (int i = 0; i < populationSize; i += 2) {
+            for (int i = 0; i < populationSize >> 1; i += 1) {
                 population.add(population.get(i).crossover(population.get(i + 1)));
+            }
+            for (int i = 0; i < populationSize >> 1; i++) {
+                population.add(population.get(i).crossover(population.get(population.size() - i - 1)));
             }
 
             //do the mutation children
-            for (int i = 0; i < populationSize; i += 2) {
+            for (int i = 0; i < populationSize >> 1; i += 1) {
                 population.add(population.get(i).mutate());
             }
-addtime+=System.currentTimeMillis()-addstart;
 
-sortstart=System.currentTimeMillis();
 
             //sort by fitness
             Collections.sort(population, geneComparor);
-sorttime+=System.currentTimeMillis()-sortstart;
 
 
-gcstart=System.currentTimeMillis();
-System.gc();
-gctime+=System.currentTimeMillis()-gcstart;
 
             //take only the top 10 individuals
             population = population.subList(0, populationSize);
-	}
+            if (generation % 100 == 0) {//wtf java, why dont you clean up after yourself
+                List<Genotype> temp = new ArrayList(populationSize);
+                temp.addAll(population);
+                population = null;
+                population = temp;
+            }
+        }
+        System.out.println(population.get(0));
     }
 }
