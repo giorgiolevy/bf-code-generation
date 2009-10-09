@@ -20,6 +20,18 @@ public class BFInterpreter {
     ]: end while
      */
 
+    /**
+     * ***********************************************
+     * Methods
+     */
+
+    /**
+     * Method: main()
+     *
+     *  Main method, runs test on the interpreter.
+     *
+     */
+
     public static void main(String args[]) {
         System.out.println(System.currentTimeMillis());
         String test;// = "+++++++++ +d[g>q+e+v+b+f+h+t+u>k+h+d+6+3+78+9+3+2+er+>c+z+b+m>g+s<w<er<y<ui-yt]e>+3+4.2>6+d.b+d+f+ert++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.";
@@ -33,6 +45,12 @@ public class BFInterpreter {
         System.out.println(System.currentTimeMillis());
     }
 
+    /**
+     * Method: subInterpret()
+     *
+     *  <David fill in here>.
+     *
+     */
     private static String subInterpret(String bf) {
         ArrayList<Integer> tape = new ArrayList() {
 
@@ -63,9 +81,8 @@ public class BFInterpreter {
         int bfHead = 0;
         int tapeHead = 0;
         int numWhiles = 0;
-        while (bfHead <
-                bf.length()) {
-//            System.out.print(command + " (" + bfHead + "): " + tape + " ");
+        while (bfHead < bf.length()) {
+            //System.out.print(command + " (" + bfHead + "): " + tape + " ");
             command++;
             switch (bf.charAt(bfHead)) {
                 case '>'://>
@@ -130,10 +147,22 @@ public class BFInterpreter {
         return out.toString();
     }
 
+    /**
+     * Method: interpret()
+     *
+     *  Method to interpret Brainf*ck code..
+     *
+     */
     public static String interpret(final String bf) {
         return subInterpret(bf);
     }
 
+    /**
+     * Method: stringToBF()
+     *
+     *  Converts a string of BrainF*ck code to an array of bytes. 
+     *
+     */
     public static byte[] stringToBF(String s) {
 
         byte[] ret = new byte[s.length()];
@@ -170,6 +199,12 @@ public class BFInterpreter {
         return ret;
     }
 
+    /**
+     * Method: bfToString()
+     *
+     *  Converts an array of bytes to BrainF*ck code. 
+     *
+     */
     public static String bfToString(byte[] b) {
         StringBuilder ret = new StringBuilder(b.length);
         for (byte byt : b) {
