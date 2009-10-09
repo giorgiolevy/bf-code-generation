@@ -1,7 +1,7 @@
-
 import java.util.Arrays;
 
 /**
+ * BFGenotype.java: Genotype class for the Brainf*ck project.
  *
  * @author djk1076
  */
@@ -16,6 +16,7 @@ public class BFGenotype implements Genotype<BFGenotype> {
 
         none, insert, delete, change, crossover
     };
+
     private ChangeType changeType = ChangeType.none;
 
     public BFGenotype(byte[] bytes) {
