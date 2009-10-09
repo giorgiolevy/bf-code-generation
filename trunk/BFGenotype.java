@@ -19,6 +19,11 @@ public class BFGenotype implements Genotype<BFGenotype> {
 
     private ChangeType changeType = ChangeType.none;
 
+    /**
+     * ***********************************************
+     * Constructors
+     */
+
     public BFGenotype(byte[] bytes) {
         this.genes = bytes.clone();
         phenotype = new BFPhenotype(genes);
@@ -38,6 +43,17 @@ public class BFGenotype implements Genotype<BFGenotype> {
         id = nextID++;
     }
 
+    /**
+     * ***********************************************
+     * Methods
+     */
+
+    /**
+     * Method: getPhenotype()
+     *  
+     *  Accessor method for the object's phenotype object.
+     *
+     */
     public Phenotype getPhenotype() {
         return phenotype;
     }
@@ -53,6 +69,12 @@ public class BFGenotype implements Genotype<BFGenotype> {
         }
     }
 
+    /**
+     * Method: insert()
+     *  
+     *  Insertion mutation method.  Randomly inserts a new gene into genotype. 
+     *
+     */
     private Genotype insert() {
         byte[] newBytes = new byte[genes.length + 1];
         int rand = (int) (Math.random() * newBytes.length);
@@ -62,6 +84,12 @@ public class BFGenotype implements Genotype<BFGenotype> {
         return new BFGenotype(newBytes, ChangeType.insert);
     }
 
+    /**
+     * Method: delete()
+     *  
+     *  Deletion mutation method.  Randomly deletes a gene from genotype. 
+     *
+     */
     private Genotype delete() {
         if (genes.length == 0) {
             return this;
@@ -73,6 +101,12 @@ public class BFGenotype implements Genotype<BFGenotype> {
         return new BFGenotype(newBytes, ChangeType.delete);
     }
 
+    /**
+     * Method: change()
+     *  
+     *  Change mutation method.  Randomly changes an existing gene in genotype. 
+     *
+     */
     private Genotype change() {
         if (genes.length == 0) {
             return this;
@@ -87,16 +121,28 @@ public class BFGenotype implements Genotype<BFGenotype> {
         return new BFGenotype(newBytes, ChangeType.change);
     }
 
+    /**
+     * Method: crossover()
+     *  
+     *  Crossover method.  Cross this genotype with another. 
+     *
+     */
     public Genotype crossover(BFGenotype other) {
 
-        //  if (Math.random() > .5) {
+        //if (Math.random() > .5) {
         return singleCross(other);
-    //} else {
-    //  return doubleCross(other);
-    //}
+        //} else {
+        //  return doubleCross(other);
+        //}
 
     }
 
+    /**
+     * Method: singleCross()
+     *  
+     *  Single crossover method.  Use single point crossover on two genotypes. 
+     *
+     */
     private Genotype singleCross(BFGenotype other) {
         int rand1 = (int) (Math.random() * genes.length);
         int rand2 = (int) (Math.random() * other.genes.length);
@@ -107,14 +153,32 @@ public class BFGenotype implements Genotype<BFGenotype> {
         return new BFGenotype(newBytes, ChangeType.crossover);
     }
 
+    /**
+     * Method: getID()
+     *  
+     *  Accessor method for the object's ID.
+     *
+     */
     public int getID() {
         return id;
     }
 
+    /**
+     * Method: getChangeType()
+     *  
+     *  Accessor method for the object's change type enum.
+     *
+     */
     public ChangeType getChangeType() {
         return changeType;
     }
 
+    /**
+     * Method: toSting()
+     *  
+     *  Overriden toString() method.
+     *
+     */
     public String toString() {
         return "" + id + BFInterpreter.bfToString(genes);
     }
