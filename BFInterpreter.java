@@ -1,6 +1,10 @@
-
 import java.util.*;
 
+/**
+ * BFInterpreter.java: Brainf*ck code interpreter for the Brainf*ck project.
+ *
+ * @author djk1076
+ */
 public class BFInterpreter {
 
     static String desired = "hello world";

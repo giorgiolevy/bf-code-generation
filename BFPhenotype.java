@@ -1,7 +1,7 @@
-
 import java.util.Arrays;
 
 /**
+ * BFPhenotype.java: Phenotype class for Brainf*ck project.
  *
  * @author djk1076
  */
@@ -10,13 +10,17 @@ public class BFPhenotype implements Phenotype {
     private String bfCode;
     private String output;
     private BFPhenotype.Fitness fitness;
-public static void main(String args[]){
-Comparable fit1=new BFPhenotype.Fitness("hello world",0);
-Comparable fit2=new BFPhenotype.Fitness("",0);
-Comparable fit3=new BFPhenotype.Fitness("asdfsadfasdfasdfsa",0);
-System.out.println(fit1.compareTo(fit2));
-System.out.println(fit2.compareTo(fit3));
-}
+
+    // TESTING ONLY *****
+    public static void main(String args[]){
+      Comparable fit1=new BFPhenotype.Fitness("hello world",0);
+      Comparable fit2=new BFPhenotype.Fitness("",0);
+      Comparable fit3=new BFPhenotype.Fitness("asdfsadfasdfasdfsa",0);
+      System.out.println(fit1.compareTo(fit2));
+      System.out.println(fit2.compareTo(fit3));
+    }
+    // ******************
+
     public BFPhenotype(byte[] bytes) {
         bfCode = BFInterpreter.bfToString(bytes);
         output = BFInterpreter.interpret(bfCode);
@@ -35,8 +39,6 @@ System.out.println(fit2.compareTo(fit3));
             s1 += (char)0;
         }
         byte[] b1 = s1.getBytes();
-
-
 
         byte[] b2 = BFInterpreter.desired.getBytes();
 
@@ -109,8 +111,6 @@ return -1;
          //   } else {
            //     return (len - o.len);
             //}
-
-
 
         }
 
