@@ -1,6 +1,6 @@
 
 import java.util.*;
-
+import java.io.*;
 /**
  *
  * @author djk1076
@@ -11,10 +11,10 @@ public class HW1 {
      *
      * @param args
      */
-    private static final int populationSize = 100;
-    private static final int numGenerations = 10000;
+    private static final int populationSize = 200;
+    private static final int numGenerations = 100;
 
-    public static void main(String args[]) {
+    public static void main(String args[]) throws Exception{
         List<Genotype> population = new LinkedList<Genotype>();
 
         //generate the random first generation
@@ -28,7 +28,9 @@ public class HW1 {
                 return g2.getPhenotype().getFitness().compareTo(g1.getPhenotype().getFitness());
             }
         };
-
+	BufferedWriter best=new BufferedWriter(new FileWriter(new File("best.txt")));
+	BufferedWriter worst=new BufferedWriter(new FileWriter(new File("worst.txt")));
+	
         for (int generation = 1; generation <= numGenerations; generation++) {
             //printouts
             if (generation % 20 == 0) {
@@ -59,13 +61,19 @@ public class HW1 {
 
             //take only the top 10 individuals
             population = population.subList(0, populationSize);
-            if (generation % 100 == 0) {//wtf java, why dont you clean up after yourself
+            if (generation % 100 == 0) {
                 List<Genotype> temp = new ArrayList(populationSize);
                 temp.addAll(population);
                 population = null;
                 population = temp;
             }
+	    best.write(""+generation+":"+population.get(0).getPhenotype()+"\n");
+	    worst.write(""+generation+":"+population.get(population.size()-1).getPhenotype()+"\n");
         }
+	best.flush();
+	best.close();
+	worst.flush();
+	worst.close();
         System.out.println(population.get(0));
     }
 }
