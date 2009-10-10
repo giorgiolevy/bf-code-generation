@@ -43,37 +43,8 @@ public class BFPhenotype implements Phenotype {
      *  Method to compute difference between output and s1.
      *
      */
-    public static int distance(String s1) {
-        if (s1.length() == 0) {
-            return Integer.MAX_VALUE;
-        }
-        while (s1.length() < BFGenerator.desired.length()) {
-            s1 += (char)0;
-        }
-        byte[] b1 = s1.getBytes();
-
-        byte[] b2 = BFGenerator.desired.getBytes();
-
-        int distance = 0;
-        for (int i = 0; i < b2.length; i++) {
-            distance += (b1[i] - b2[i]) * (b1[i] - b2[i]) * (b2.length - i) * (b2.length - i) * (b2.length - i) * (b2.length - i);
-        }
-
-        for (int i = BFGenerator.desired.length(); i < s1.length(); i++) {
-            distance += b1[i] * b1[i];
-        }
-        return distance;
-
-    }
-
-    /**
-     * Method: distance()
-     *
-     *  Method to compute difference between output and s1.
-     *
-     */
     public String toString() {
-        return fitness + ":" + /*bfCode + ":" + output.length() +*/ ":" + output;
+        return fitness + ":" + ":" + output;
     }
 
     /**
@@ -104,8 +75,7 @@ public class BFPhenotype implements Phenotype {
                 if (vals[i]<256 && vals[i]>-256)
                   vals[i] = vals[i] * vals[i];
                 else
-                  vals[i]=Integer.MAX_VALUE;
-                if (vals[i]<0)System.out.println("problem"+(int)BFGenerator.desired.charAt(i)+":"+(int)s.charAt(i));
+                  vals[i]=Integer.MAX_VALUE;                
             }
             for (int i = BFGenerator.desired.length(); i < s.length(); i++) {
                 vals[i] = Integer.MAX_VALUE;
@@ -130,7 +100,6 @@ public class BFPhenotype implements Phenotype {
             return -1;
           int[] otherVal = o.vals;
           for (int i = 0; i < otherVal.length && i < vals.length; i++) {
-            //System.out.println("abc");
             if (vals[i] > otherVal[i]) {
                 return -1;
             } else if (vals[i] < otherVal[i]) {
@@ -139,19 +108,12 @@ public class BFPhenotype implements Phenotype {
           }
 
           if (vals.length > BFGenerator.desired.length()) {
-            //System.out.println("here");
             return -1;
           } else if (vals.length < BFGenerator.desired.length()) {
-            //System.out.println("there");
             return 1;
           }
 
-          //if (Math.random() < .8) {
             return (o.len - len);
-          //} else {
-            //return (len - o.len);
-          //}
-
         }
 
         /**
@@ -161,7 +123,15 @@ public class BFPhenotype implements Phenotype {
          *
          */
         public String toString() {
-          return "(" + Arrays.toString(vals) + ":" + len + ")";
+	  int j=0;
+	  for (int i=0;i<vals.length;i++){
+	  	if (vals[i]!=0){
+			j=i;
+			break;
+		}
+	}
+		  
+          return j+" (" + Arrays.toString(vals) + ":" + len + ")";
         }
     }
 }
