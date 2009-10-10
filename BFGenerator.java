@@ -5,21 +5,26 @@ import java.io.*;
  *
  * @author djk1076
  */
-public class HW1 {
+public class BFGenerator {
 
     /**
      *
-     * @param args
+     * @param args: args[0]: [optional] desired output
      */
     private static final int populationSize = 200;
     private static final int numGenerations = 100;
+    public static String desired="hello world";
 
     public static void main(String args[]) throws Exception{
-        List<Genotype> population = new LinkedList<Genotype>();
+	if (args.length>0)
+	    desired=args[0];
+	    
+        List<Genotype> population = new ArrayList<Genotype>();
 
         //generate the random first generation
         for (int i = 0; i < populationSize; i++) {
-            population.add(new BFGenotype("++++++++++++++++++++++++++++.++."));
+	   
+            population.add(new BFGenotype("++++++++++++++++++++++++++++++++++++++++++.++."));//seed with something that will produce some ascii values
         }
 
         Comparator<Genotype> geneComparor = new Comparator<Genotype>() {
@@ -33,17 +38,17 @@ public class HW1 {
 	
         for (int generation = 1; generation <= numGenerations; generation++) {
             //printouts
-            if (generation % 20 == 0) {
+            if (generation % 10 == 0) {
                 System.out.println("generation:" + generation);
                 System.out.println("\t\t" +
                         population.get(0).getPhenotype() + " : " + ((BFGenotype) population.get(0)).getChangeType());
-            //	    System.out.println("\t\t" + population.get(1).getPhenotype());
             }
 
             //do the crossover children
             for (int i = 0; i < populationSize >> 1; i += 1) {
                 population.add(population.get(i).crossover(population.get(i + 1)));
             }
+	    //try 'bad' crossovers
             for (int i = 0; i < populationSize >> 1; i++) {
                 population.add(population.get(i).crossover(population.get(population.size() - i - 1)));
             }
@@ -61,7 +66,7 @@ public class HW1 {
 
             //take only the top 10 individuals
             population = population.subList(0, populationSize);
-            if (generation % 100 == 0) {
+            if (generation % 100 == 0) {//prevents major memory leaks by redoing array
                 List<Genotype> temp = new ArrayList(populationSize);
                 temp.addAll(population);
                 population = null;

@@ -34,9 +34,7 @@ public class BFInterpreter {
 
     public static void main(String args[]) {
         System.out.println(System.currentTimeMillis());
-        String test;// = "+++++++++ +d[g>q+e+v+b+f+h+t+u>k+h+d+6+3+78+9+3+2+er+>c+z+b+m>g+s<w<er<y<ui-yt]e>+3+4.2>6+d.b+d+f+ert++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>.";
-        //test = "+++++++++++++++[>+++++++>++++++++>+++++++>++<<<<-]>-.>>.>++.<<----.>-.---.<--.>.>.<<++.<.+.>-.>>.<++++.<.>>.<<<--------.>>>.<<-.<.>----.<+++.>+.>++++.>.<<--.--------.>++++++..<----.<+++.--.>>>.<-.<.>----.<<-.>>+.--.>.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.+.<-.-.>++++++++.-.-.<++++.<<.>>++++.<+.<.--.>>>++.+.<<-.+++.>.>-.<<.>+++.---.<.>+++.<.<.>>>.+.<<.>.<+++++++++++++++.<+++.>>+.<++.------.<.>>.<++.<.>>.------.---------------------------------------------------------.+.------.-.++++++.+.------.+.++++.+.>-----.+++.<<<-.++.----.>>>+.<<++.<.>>>.<<+++.<++++..--.";
-        test = "++++++++++[>+++>++++++++++>+++++++++++>++++++++++++[<]>-]>>++++.>+.>-.<<<++.>>>.<<---.>---..<<.>-.>+++.<+.>++++.<<.>>>---.<<+++.+.>.<<.>>>+++.<----.+++.-------.<<.>>>---.<++++.<<.>-----.>.<<.>>---.+++..+.+++.";
+        String test = "++++++++++[>+++>++++++++++>+++++++++++>++++++++++++[<]>-]>>++++.>+.>-.<<<++.>>>.<<---.>---..<<.>-.>+++.<+.>++++.<<.>>>---.<<+++.+.>.<<.>>>+++.<----.+++.-------.<<.>>>---.<++++.<<.>-----.>.<<.>>---.+++..+.+++.";
         System.out.println(System.currentTimeMillis());
 
 
@@ -46,13 +44,13 @@ public class BFInterpreter {
     }
 
     /**
-     * Method: subInterpret()
+     * Method: interpret()
      *
-     *  <David fill in here>.
+     *  Method to interpret Brainf*ck code..
      *
      */
-    private static String subInterpret(String bf) {
-        ArrayList<Integer> tape = new ArrayList() {
+    public static String interpret(String bf) {
+         ArrayList<Integer> tape = new ArrayList() {
 
             public Integer get(int index) {//prevent index errors on the left side of the tape
                 if (index < 0) {
@@ -145,16 +143,6 @@ public class BFInterpreter {
             bfHead++;
         }
         return out.toString();
-    }
-
-    /**
-     * Method: interpret()
-     *
-     *  Method to interpret Brainf*ck code..
-     *
-     */
-    public static String interpret(final String bf) {
-        return subInterpret(bf);
     }
 
     /**
