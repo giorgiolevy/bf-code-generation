@@ -180,6 +180,6 @@ public class BFGenotype implements Genotype<BFGenotype> {
      *
      */
     public String toString() {
-        return "" + id + BFInterpreter.bfToString(genes);
+	return "" + id + ":" + BFInterpreter.bfToString(genes);
     }
 }
