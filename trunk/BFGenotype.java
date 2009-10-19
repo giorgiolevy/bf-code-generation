@@ -96,7 +96,7 @@ public class BFGenotype implements Genotype<BFGenotype> {
         }
         byte[] newBytes = new byte[genes.length - 1];
         int rand = (int) (Math.random() * newBytes.length);
-        System.arraycopy(genes, 0, newBytes, 0, rand);//todo: double check the indices here
+        System.arraycopy(genes, 0, newBytes, 0, rand);
         System.arraycopy(genes, rand + 1, newBytes, rand, genes.length - rand - 1);
         return new BFGenotype(newBytes, ChangeType.delete);
     }
@@ -128,13 +128,7 @@ public class BFGenotype implements Genotype<BFGenotype> {
      *
      */
     public Genotype crossover(BFGenotype other) {
-
-        //if (Math.random() > .5) {
         return singleCross(other);
-        //} else {
-        //  return doubleCross(other);
-        //}
-
     }
 
     /**

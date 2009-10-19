@@ -65,7 +65,7 @@ public class BFPhenotype implements Phenotype {
 
         public Fitness(String s, int len) {
             while (s.length() < BFGenerator.desired.length()) {
-                s += " ";
+                s += (char)0;
             }
 
             vals = new int[s.length()];
