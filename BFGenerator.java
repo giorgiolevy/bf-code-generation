@@ -23,8 +23,15 @@ public class BFGenerator {
 
         //generate the random first generation
         for (int i = 0; i < populationSize; i++) {
-	   
-            population.add(new BFGenotype("++++++++++++++++++++++++++++++++++++++++++.++."));//seed with something that will produce some ascii values
+	   String rand="";
+	   int len=(int)(Math.random()*100);
+	   for (int j=0;j<len;j++)
+		   rand+="+";
+	   for (int j=0;j<5;j++){
+		   int index=(int)(Math.random()*rand.length());
+		   rand=rand.substring(0,index)+"."+rand.substring(index,rand.length());
+	   }
+            population.add(new BFGenotype(rand));//seed with something that will produce some ascii values
         }
 
         Comparator<Genotype> geneComparor = new Comparator<Genotype>() {
@@ -34,6 +41,7 @@ public class BFGenerator {
             }
         };
 	BufferedWriter best=new BufferedWriter(new FileWriter(new File("best.txt")));
+	BufferedWriter median=new BufferedWriter(new FileWriter(new File("median.txt")));
 	BufferedWriter worst=new BufferedWriter(new FileWriter(new File("worst.txt")));
 	
         for (int generation = 1; generation <= numGenerations; generation++) {
@@ -73,10 +81,13 @@ public class BFGenerator {
                 population = temp;
             }
 	    best.write(""+generation+":"+population.get(0).getPhenotype()+"\n");
+	    median.write(""+generation+":"+population.get(population.size()/2).getPhenotype()+"\n");
 	    worst.write(""+generation+":"+population.get(population.size()-1).getPhenotype()+"\n");
         }
 	best.flush();
 	best.close();
+	median.flush();
+	median.close();
 	worst.flush();
 	worst.close();
         System.out.println(population.get(0));
