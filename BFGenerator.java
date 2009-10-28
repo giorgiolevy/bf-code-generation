@@ -61,7 +61,7 @@ public class BFGenerator {
                 population.add(population.get(i).crossover(population.get(populationSize - i - 1)));
             }
 
-            //do the mutation 'good' children
+            //do the mutation for 'good' children
             for (int i = 0; i < populationSize >> 1; i++) {
                 population.add(population.get(i).mutate());
             }
