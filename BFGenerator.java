@@ -40,9 +40,9 @@ public class BFGenerator {
                 return g2.getPhenotype().getFitness().compareTo(g1.getPhenotype().getFitness());
             }
         };
-	BufferedWriter best=new BufferedWriter(new FileWriter(new File("best.txt")));
-	BufferedWriter median=new BufferedWriter(new FileWriter(new File("median.txt")));
-	BufferedWriter worst=new BufferedWriter(new FileWriter(new File("worst.txt")));
+	BufferedWriter best = new BufferedWriter(new FileWriter(new File("best.txt")));
+	BufferedWriter median = new BufferedWriter(new FileWriter(new File("median.txt")));
+	BufferedWriter worst = new BufferedWriter(new FileWriter(new File("worst.txt")));
 	
         for (int generation = 1; generation <= numGenerations; generation++) {
             //printouts
@@ -53,17 +53,22 @@ public class BFGenerator {
             }
 
             //do the crossover children
-            for (int i = 0; i < populationSize >> 1; i += 1) {
+            for (int i = 0; i < populationSize >> 1; i++) {
                 population.add(population.get(i).crossover(population.get(i + 1)));
             }
 	    //try 'bad' crossovers
             for (int i = 0; i < populationSize >> 1; i++) {
-                population.add(population.get(i).crossover(population.get(population.size() - i - 1)));
+                population.add(population.get(i).crossover(population.get(populationSize - i - 1)));
             }
 
-            //do the mutation children
-            for (int i = 0; i < populationSize >> 1; i += 1) {
+            //do the mutation 'good' children
+            for (int i = 0; i < populationSize >> 1; i++) {
                 population.add(population.get(i).mutate());
+            }
+	    
+	    //do the mutation for 'bad' children
+            for (int i = 1; i < populationSize >> 1; i++) {
+                population.add(population.get(populationSize-i).mutate());
             }
 
 
