@@ -59,10 +59,11 @@ public class BFGenotype implements Genotype<BFGenotype> {
     }
 
     public Genotype mutate() {
-	    double rand=Math.random();
+	    int rand=(int)(Math.random()*BFGenerator.mutTotal);
+	    
 	    if (rand<BFGenerator.mut1)
 		    return insert();
-	    if (rand<BFGenerator.mut2)
+	    if (rand<(BFGenerator.mut1+BFGenerator.mut2))
 		    return delete();
 	    return change();
     }
@@ -127,7 +128,7 @@ public class BFGenotype implements Genotype<BFGenotype> {
      */
     public Genotype crossover(BFGenotype other) {
 	    if (Math.random()<BFGenerator.cross1){
-		    return singleCross(other);
+		    return doubleCross(other);
 	    }else{
 		    return singleCross(other);
 	    }
@@ -150,7 +151,7 @@ public class BFGenotype implements Genotype<BFGenotype> {
 	    
 	    //copy start and end from current
 	    System.arraycopy(genes,0,newBytes,0,rand11);//0-rand11
-	    System.arraycopy(genes,genes.length-rand12,newBytes,rand12,genes.length-rand12); //(rand12-end)
+	    System.arraycopy(genes,rand12,newBytes,newBytes.length-(genes.length-rand12),genes.length-rand12); //(rand12-end)
 	    
 	    //copy middle section from other
 	    System.arraycopy(other.genes,rand21,newBytes,rand11,rand22-rand21);//(rand21-rand22)
