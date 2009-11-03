@@ -10,4 +10,11 @@ public interface Phenotype {
      * @return the fitness of this phenotype
      */
     public Comparable getFitness();
+    
+    /**
+    * Method: getGraphVal()
+    *
+    * Method to get a graphable fitness value
+    */
+    public int getGraphVal();
 }
