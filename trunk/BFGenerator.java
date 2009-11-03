@@ -11,14 +11,30 @@ public class BFGenerator {
      *
      * @param args: args[0]: [optional] desired output
      */
-    private static final int populationSize = 200;
-    private static final int numGenerations = 100;
+    private static int populationSize = 200;
+    private static int numGenerations = 100;
     public static String desired="hello world";
 
+    public static double mut1 = 0.33;
+    public static double mut2 = 0.33;
+    public static double cross1 = 0.5;
+
     public static void main(String args[]) throws Exception{
-	if (args.length>0)
+	if (args.length>0) {
+    if(args.length == 6){
 	    desired=args[0];
-	    
+      mut1=Double.parseDouble(args[1]);  
+      mut2=Double.parseDouble(args[2]);  
+      cross1=Double.parseDouble(args[3]);  
+      populationSize=Integer.parseInt(args[4]);
+      numGenerations=Integer.parseInt(args[5]);
+    }
+    else{
+      System.out.println("Usage: java BFGenerator <desired string> <mutation 1 rate> " +
+                         "<mutation rate 2> <crossover rate 1> <max population> <max generations>");
+      System.exit(1);
+    }
+	} 
         List<Genotype> population = new ArrayList<Genotype>();
 
         //generate the random first generation
@@ -40,9 +56,12 @@ public class BFGenerator {
                 return g2.getPhenotype().getFitness().compareTo(g1.getPhenotype().getFitness());
             }
         };
-	BufferedWriter best = new BufferedWriter(new FileWriter(new File("best.txt")));
-	BufferedWriter median = new BufferedWriter(new FileWriter(new File("median.txt")));
-	BufferedWriter worst = new BufferedWriter(new FileWriter(new File("worst.txt")));
+        String beststr = "best-" + args[1] + "-" + args[2] + "-" + args[3] + "-" + populationSize + "-" + numGenerations + ".txt"; 
+        String medianstr = "median-" + args[1] + "-" + args[2] + "-" + args[3] + "-" + populationSize + "-" + numGenerations + ".txt"; 
+        String worststr = "worst-" + args[1] + "-" + args[2] + "-" + args[3] + "-" + populationSize + "-" + numGenerations + ".txt"; 
+	BufferedWriter best = new BufferedWriter(new FileWriter(new File(beststr)));
+	BufferedWriter median = new BufferedWriter(new FileWriter(new File(medianstr)));
+	BufferedWriter worst = new BufferedWriter(new FileWriter(new File(worststr)));
 	
         for (int generation = 1; generation <= numGenerations; generation++) {
             //printouts
