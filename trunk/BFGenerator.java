@@ -15,26 +15,33 @@ public class BFGenerator {
     private static int numGenerations = 100;
     public static String desired="hello world";
 
-    public static double mut1 = 0.33;
-    public static double mut2 = 0.33;
+    public static int mut1 = 1;
+    public static int mut2 = 1;
+    public static int mut3 = 1;
+    public static int mutTotal;
     public static double cross1 = 0.5;
 
     public static void main(String args[]) throws Exception{
 	if (args.length>0) {
-    if(args.length == 6){
+    if(args.length == 7){
 	    desired=args[0];
-      mut1=Double.parseDouble(args[1]);  
-      mut2=Double.parseDouble(args[2]);  
-      cross1=Double.parseDouble(args[3]);  
-      populationSize=Integer.parseInt(args[4]);
-      numGenerations=Integer.parseInt(args[5]);
+      mut1=Integer.parseInt(args[1]);  
+      mut2=Integer.parseInt(args[2]);
+      mut3=Integer.parseInt(args[3]);
+      cross1=Double.parseDouble(args[4]);  
+      populationSize=Integer.parseInt(args[5]);
+      numGenerations=Integer.parseInt(args[6]);
     }
     else{
       System.out.println("Usage: java BFGenerator <desired string> <mutation 1 rate> " +
                          "<mutation rate 2> <crossover rate 1> <max population> <max generations>");
       System.exit(1);
     }
-	} 
+	} else{
+		args=new String[6];
+		args[4]=".5";
+	}
+	mutTotal=mut1+mut2+mut3;
         List<Genotype> population = new ArrayList<Genotype>();
 
         //generate the random first generation
@@ -56,12 +63,11 @@ public class BFGenerator {
                 return g2.getPhenotype().getFitness().compareTo(g1.getPhenotype().getFitness());
             }
         };
-        String beststr = "best-" + args[1] + "-" + args[2] + "-" + args[3] + "-" + populationSize + "-" + numGenerations + ".txt"; 
-        String medianstr = "median-" + args[1] + "-" + args[2] + "-" + args[3] + "-" + populationSize + "-" + numGenerations + ".txt"; 
-        String worststr = "worst-" + args[1] + "-" + args[2] + "-" + args[3] + "-" + populationSize + "-" + numGenerations + ".txt"; 
-	BufferedWriter best = new BufferedWriter(new FileWriter(new File(beststr)));
-	BufferedWriter median = new BufferedWriter(new FileWriter(new File(medianstr)));
-	BufferedWriter worst = new BufferedWriter(new FileWriter(new File(worststr)));
+        String filestr =  mut1 + "-" + mut2 +"-"+mut3+"-"+args[4] + "-" + populationSize + "-" + numGenerations + ".txt"; 
+        BufferedWriter best = new BufferedWriter(new FileWriter(new File("best-"+filestr)));
+	BufferedWriter median = new BufferedWriter(new FileWriter(new File("median-"+filestr)));
+	BufferedWriter worst = new BufferedWriter(new FileWriter(new File("worst-"+filestr)));
+	BufferedWriter graph=new BufferedWriter(new FileWriter(new File("graph-"+filestr)));
 	
         for (int generation = 1; generation <= numGenerations; generation++) {
             //printouts
@@ -107,6 +113,7 @@ public class BFGenerator {
 	    best.write(""+generation+","+population.get(0).getPhenotype().getGraphVal()+"\n");
 	    median.write(""+generation+","+population.get(population.size()/2).getPhenotype().getGraphVal()+"\n");
 	    worst.write(""+generation+","+population.get(population.size()-1).getPhenotype().getGraphVal()+"\n");
+	    graph.write(""+generation+","+population.get(0).getPhenotype().getGraphVal()+","+population.get(population.size()/2).getPhenotype().getGraphVal()+","+population.get(population.size()-1).getPhenotype().getGraphVal()+"\n");
         }
 	best.flush();
 	best.close();
@@ -114,6 +121,8 @@ public class BFGenerator {
 	median.close();
 	worst.flush();
 	worst.close();
+	graph.flush();
+	graph.close();
         System.out.println(population.get(0));
     }
 }
