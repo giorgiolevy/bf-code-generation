@@ -38,6 +38,14 @@ public class BFPhenotype implements Phenotype {
     }
 
     /**
+	* Method: getGraphVal()
+	*
+	* Method to get a graphable fitness value
+	*/
+    public int getGraphVal(){
+	    return fitness.getGraphVal();
+    }
+    /**
      * Method: distance()
      *
      *  Method to compute difference between output and s1.
@@ -116,6 +124,24 @@ public class BFPhenotype implements Phenotype {
             return (o.len - len);
         }
 
+	
+	/**
+	* Method: getGraphVal()
+	*
+	* Method to get a graphable fitness value
+	*/
+	public int getGraphVal(){
+	  int j=0;
+	  for (int i=0;i<vals.length;i++){
+	  	if (vals[i]!=0){
+			j=i;
+			return j;
+		}
+	  }
+	  return 0;	
+	}
+	
+	
         /**
          * Method: toString()
          *
@@ -123,15 +149,8 @@ public class BFPhenotype implements Phenotype {
          *
          */
         public String toString() {
-	  int j=0;
-	  for (int i=0;i<vals.length;i++){
-	  	if (vals[i]!=0){
-			j=i;
-			break;
-		}
-	}
-		  
-          return j+" (" + Arrays.toString(vals) + ":" + len + ")";
+	   
+          return ""+getGraphVal()+" (" + Arrays.toString(vals) + ":" + len + ")";
         }
     }
 }

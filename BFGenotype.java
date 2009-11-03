@@ -14,7 +14,7 @@ public class BFGenotype implements Genotype<BFGenotype> {
 
     private enum ChangeType {
 
-        none, insert, delete, change, crossover
+        none, insert, delete, change, singleCross,doubleCross
     };
 
     private ChangeType changeType = ChangeType.none;
@@ -59,14 +59,12 @@ public class BFGenotype implements Genotype<BFGenotype> {
     }
 
     public Genotype mutate() {
-        switch ((int) (Math.random() * 3)) {
-            case 0:
-                return insert();
-            case 1:
-                return delete();
-            default:
-                return change();
-        }
+	    double rand=Math.random();
+	    if (rand<BFGenerator.mut1)
+		    return insert();
+	    if (rand<BFGenerator.mut2)
+		    return delete();
+	    return change();
     }
 
     /**
@@ -128,9 +126,39 @@ public class BFGenotype implements Genotype<BFGenotype> {
      *
      */
     public Genotype crossover(BFGenotype other) {
-        return singleCross(other);
+	    if (Math.random()<BFGenerator.cross1){
+		    return singleCross(other);
+	    }else{
+		    return singleCross(other);
+	    }
     }
 
+    
+    /**
+    * Method: doubleCross()
+    *
+    * Double crossover method. Use double crossover on two genotypes.
+    * Replaces section (rand11-rand12) with other(rand21-rand22)
+    * 
+    */
+    private Genotype doubleCross(BFGenotype other){
+	    int rand11 = (int) (Math.random() * genes.length);
+	    int rand12 = Math.min((int)(rand11+Math.random()*genes.length),genes.length-1);
+	    int rand21 = (int) (Math.random() * other.genes.length);
+	    int rand22 = Math.min((int)(rand21+Math.random()*other.genes.length),other.genes.length-1);
+	    byte[] newBytes=new byte[rand11+ (rand22-rand21)+(genes.length-rand12)];
+	    
+	    //copy start and end from current
+	    System.arraycopy(genes,0,newBytes,0,rand11);//0-rand11
+	    System.arraycopy(genes,genes.length-rand12,newBytes,rand12,genes.length-rand12); //(rand12-end)
+	    
+	    //copy middle section from other
+	    System.arraycopy(other.genes,rand21,newBytes,rand11,rand22-rand21);//(rand21-rand22)
+	    
+	    return new BFGenotype(newBytes,ChangeType.doubleCross);
+    }
+    
+    
     /**
      * Method: singleCross()
      *  
@@ -144,7 +172,7 @@ public class BFGenotype implements Genotype<BFGenotype> {
         byte[] newBytes = new byte[rand1 + other.genes.length - rand2];
         System.arraycopy(genes, 0, newBytes, 0, rand1);
         System.arraycopy(other.genes, rand2, newBytes, rand1, newBytes.length - rand1);
-        return new BFGenotype(newBytes, ChangeType.crossover);
+        return new BFGenotype(newBytes, ChangeType.singleCross);
     }
 
     /**

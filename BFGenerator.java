@@ -104,9 +104,9 @@ public class BFGenerator {
                 population = null;
                 population = temp;
             }
-	    best.write(""+generation+":"+population.get(0).getPhenotype()+"\n");
-	    median.write(""+generation+":"+population.get(population.size()/2).getPhenotype()+"\n");
-	    worst.write(""+generation+":"+population.get(population.size()-1).getPhenotype()+"\n");
+	    best.write(""+generation+","+population.get(0).getPhenotype().getGraphVal()+"\n");
+	    median.write(""+generation+","+population.get(population.size()/2).getPhenotype().getGraphVal()+"\n");
+	    worst.write(""+generation+","+population.get(population.size()-1).getPhenotype().getGraphVal()+"\n");
         }
 	best.flush();
 	best.close();
