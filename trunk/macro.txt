@@ -1,0 +1,27 @@
+Sub graph()
+'
+' graph Macro
+'
+' Keyboard Shortcut: Ctrl+g
+'
+    
+    ActiveSheet.Shapes.AddChart.Select
+    ActiveChart.SetSourceData Source:=Range("$B$1:$D$100")
+    ActiveChart.ChartType = xlLineMarkers
+    ActiveChart.SetElement (msoElementChartTitleAboveChart)
+    ActiveChart.SetElement (msoElementPrimaryCategoryAxisTitleAdjacentToAxis)
+    ActiveChart.SetElement (msoElementPrimaryValueAxisTitleHorizontal)
+    ActiveChart.ChartTitle.Text = ActiveSheet.Name
+    ActiveChart.Axes(xlCategory, xlPrimary).AxisTitle.Text = "Generations"
+    ActiveChart.Axes(xlValue, xlPrimary).AxisTitle.Text = "Fitness"
+    
+    ActiveChart.Legend.LegendEntries(1).Select
+    ActiveChart.SeriesCollection(1).Name = "=""best"""
+    
+    ActiveChart.Legend.LegendEntries(1).Select
+    ActiveChart.SeriesCollection(2).Name = "=""median"""
+    
+    ActiveChart.Legend.LegendEntries(1).Select
+    ActiveChart.SeriesCollection(3).Name = "=""worst"""
+    
+End Sub
