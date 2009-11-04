@@ -128,9 +128,9 @@ public class BFGenotype implements Genotype<BFGenotype> {
      */
     public Genotype crossover(BFGenotype other) {
 	    if (Math.random()<BFGenerator.cross1){
-		    return doubleCross(other);
-	    }else{
 		    return singleCross(other);
+	    }else{
+		    return doubleCross(other);
 	    }
     }
 
