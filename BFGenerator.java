@@ -63,11 +63,9 @@ public class BFGenerator {
                 return g2.getPhenotype().getFitness().compareTo(g1.getPhenotype().getFitness());
             }
         };
-        String filestr =  mut1 + "-" + mut2 +"-"+mut3+"-"+args[4] + "-" + populationSize + "-" + numGenerations + ".txt"; 
-        BufferedWriter best = new BufferedWriter(new FileWriter(new File("best-"+filestr)));
-	BufferedWriter median = new BufferedWriter(new FileWriter(new File("median-"+filestr)));
-	BufferedWriter worst = new BufferedWriter(new FileWriter(new File("worst-"+filestr)));
-	BufferedWriter graph=new BufferedWriter(new FileWriter(new File("graph-"+filestr)));
+        String filestr =  mut1 + "-" + mut2 +"-"+mut3+"-"+args[4] + "-" + populationSize + "-" + 
+numGenerations + ".csv"; 
+        BufferedWriter graph=new BufferedWriter(new FileWriter(new File("graph-"+filestr)));
 	
         for (int generation = 1; generation <= numGenerations; generation++) {
             //printouts
@@ -110,17 +108,8 @@ public class BFGenerator {
                 population = null;
                 population = temp;
             }
-	    best.write(""+generation+","+population.get(0).getPhenotype().getGraphVal()+"\n");
-	    median.write(""+generation+","+population.get(population.size()/2).getPhenotype().getGraphVal()+"\n");
-	    worst.write(""+generation+","+population.get(population.size()-1).getPhenotype().getGraphVal()+"\n");
 	    graph.write(""+generation+","+population.get(0).getPhenotype().getGraphVal()+","+population.get(population.size()/2).getPhenotype().getGraphVal()+","+population.get(population.size()-1).getPhenotype().getGraphVal()+"\n");
         }
-	best.flush();
-	best.close();
-	median.flush();
-	median.close();
-	worst.flush();
-	worst.close();
 	graph.flush();
 	graph.close();
         System.out.println(population.get(0));
