@@ -34,7 +34,8 @@ public class BFGenerator {
     }
     else{
       System.out.println("Usage: java BFGenerator <desired string> <mutation 1 rate> " +
-                         "<mutation rate 2> <crossover rate 1> <max population> <max generations>");
+                         "<mutation rate 2> <mutation rate 3> <crossover rate 1> " + 
+                         "<max population> <max generations>");
       System.exit(1);
     }
 	} else{
