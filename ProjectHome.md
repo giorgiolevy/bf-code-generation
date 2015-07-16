@@ -1,0 +1,1 @@
+This goal of this project is to generate the smallest brainfuck code that produces a desired text string.  Generation of the code is done using a genetic algorithm, with code fitness based on the string comparison of output with desired output and the length of the code itself.
